@@ -19,10 +19,8 @@ import PackageDescription
 let package = Package(
     name: "Kitura",
     providers: [
-        .Apt("clang"),
         .Apt("libicu-dev"),
-        .Apt("libcurl4-openssl-dev"),
-        .Apt("libssl-dev")
+        .Apt("libcurl4-openssl-dev")
     ],
     dependencies: [
         .Package(url: "https://github.com/IBM-Swift/Kitura-net.git", majorVersion: 1, minor: 0),
