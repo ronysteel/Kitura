@@ -30,3 +30,4 @@ before_install:
 
 script:
   - ./Package-Builder/build-package.sh $TRAVIS_BUILD_DIR
+  - ./test-xcode-build.sh
