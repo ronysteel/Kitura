@@ -23,7 +23,7 @@ import Foundation
 import Dispatch
 
 protocol KituraTest {
-    func expectation(_ index: Int) -> XCTestExpectation
+    func expectation(line: Int, index: Int) -> XCTestExpectation
     func waitExpectation(timeout t: TimeInterval, handler: XCWaitCompletionHandler?)
 }
 
@@ -37,13 +37,13 @@ extension KituraTest {
         // sleep(10)
     }
 
-    func performServerTest(_ router: ServerDelegate,
+    func performServerTest(_ router: ServerDelegate, line: Int = #line,
                            asyncTasks: @escaping (XCTestExpectation) -> Void...) {
 
         var expectations = [XCTestExpectation]()
 
         for index in 0..<asyncTasks.count {
-            expectations.append(self.expectation(index))
+            expectations.append(self.expectation(line: line, index: index))
         }
 
         let exps = expectations
@@ -90,9 +90,8 @@ extension KituraTest {
 }
 
 extension XCTestCase: KituraTest {
-    func expectation(_ index: Int) -> XCTestExpectation {
-        let expectationDescription = "\(type(of: self))-\(index)"
-        return self.expectation(description: expectationDescription)
+    func expectation(line: Int, index: Int) -> XCTestExpectation {
+        return self.expectation(description: "\(type(of: self)):\(line)[\(index)]")
     }
 
     func waitExpectation(timeout t: TimeInterval, handler: XCWaitCompletionHandler?) {
